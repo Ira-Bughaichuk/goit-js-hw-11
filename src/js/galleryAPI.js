@@ -15,7 +15,7 @@ const API_KEY = '32790565-383584a211a893fe9ad088e3f';
             per_page: 40,
             
         }
-     const response = axios.get(`${BASE_URL}`,{ params: config }).then(data =>console.log(data));
+     const response = axios.get(`${BASE_URL}`,{ params: config });
         return response;
 
        

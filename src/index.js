@@ -12,27 +12,28 @@ refs.formEl.addEventListener('submit', onSearch);
 async function onSearch(e) {
     e.preventDefault();
    
-
+    
+    
     value = e.target.elements.searchQuery.value;
     console.log(value);
     
-   getGallery(value).then(data => console.log(data.hits));
-    
-    console.log(getGallery);
-    
-    // try {
-    //     const card = await getGallery(value).then(data => {
-    //         console.log(data.hits);
-    //         //renderCard(hits) 
-    //     }) 
+   // getGallery(value).then(data => console.log(data.data.hits));
+    //console.log(getGallery);
+    clearContainer();
+    try {
+        const card = await getGallery(value).then(res => {
+           // console.log(data.data.hits);
+            renderCard(res.data.hits);
+        })
         
-    // } catch(error) {
-    //      console.log("error")
-    // }
+        
+    } catch (error) {
+       // console.log("error")
+    }
       
     
     
-   // console.log(galleryApi);
+    // console.log(galleryApi);
     // if (galleryApi.value === '')
     //     return console.log("Sorry, there are no images matching your search query. Please try again.") 
 }
@@ -59,4 +60,11 @@ function renderCard(hits) {
             
     })).join('');
     refs.listEl.insertAdjacentHTML('beforeend', markup);
+}
+function clearContainer() {
+    refs.listEl.innerHTML = ''; 
+    
+}
+function checkSpaces(string) {
+  return string.trim() !== '';
 }
