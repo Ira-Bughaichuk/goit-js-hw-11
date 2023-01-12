@@ -1,5 +1,5 @@
 
-import { getGallery } from "./js/galleryAPI";
+import {  getGallery} from "./js/galleryAPI";
 
 const refs = {
     formEl: document.querySelector('#search-form'),
@@ -16,11 +16,16 @@ async function onSearch(e) {
     value = e.target.elements.searchQuery.value;
     console.log(value);
     
-    getGallery(value).then(data =>console.log(data) )
+   getGallery(value).then(data => console.log(data.hits));
+    
+    console.log(getGallery);
+    
     // try {
-    //     const card = await galleryApi.getGallery(value)
-    //         .then(hits=> renderCard(hits));
-    //     console.log(hits);
+    //     const card = await getGallery(value).then(data => {
+    //         console.log(data.hits);
+    //         //renderCard(hits) 
+    //     }) 
+        
     // } catch(error) {
     //      console.log("error")
     // }

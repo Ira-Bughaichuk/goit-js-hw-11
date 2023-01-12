@@ -3,24 +3,20 @@ import axios from 'axios';
 const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '32790565-383584a211a893fe9ad088e3f';
 
-const axiosGallery = axios.create({
-  baseURL: BASE_URL,
-});
 
  export function getGallery(value) {
         const config = {
-           
                 key: API_KEY,
                 q: value,
                 image_type: "photo",
                 orientation: "horizontal",
-                safesearch: "true",
+            safesearch: "true",
+            page: 1,
+            per_page: 40,
             
         }
-        const response =  axios.get(`${ BASE_URL}`, config);
-        console.log(value);
+     const response = axios.get(`${BASE_URL}`,{ params: config }).then(data =>console.log(data));
         return response;
-        //axios.get(BASE_URL).then(res => console.log(res.data));
 
        
     } 
