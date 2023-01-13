@@ -19,17 +19,6 @@ const API_KEY = '32790565-383584a211a893fe9ad088e3f';
      return response;
     } 
 
-    // incrementPage() {
-    //     this.page += 1;
-    // }
-    // resetPage() {
-    //     this.page = 1;
-    // }
-    // set value(newValue) {
-    //     this.value = newValue;
-    // }
-    // get value() {
-    //     return this.value;
-    // }
+    
     
     

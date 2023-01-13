@@ -30,16 +30,6 @@ function onSearch(e) {
 
 }
   
-function onScrollDocument(e) {
-  const { height: cardHeight } = document
-  .querySelector(".gallery")
-  .firstElementChild.getBoundingClientRect();
-
-  window.scrollBy({
-  top: cardHeight * 2,
-  behavior: "smooth",
-  }); 
-}
 
 async function getCard(value) {
   try {
@@ -75,8 +65,6 @@ function onMoreLoadPage() {
     }
   })
   
- 
- 
 }
 
 function renderCard(hits) {
@@ -115,4 +103,14 @@ function clearContainer() {
 }
 function checkSpaces(string) {
   return string.trim() !== '';
+}
+function onScrollDocument(e) {
+  const { height: cardHeight } = document
+  .querySelector(".gallery")
+  .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+  top: cardHeight * 2,
+  behavior: "smooth",
+  }); 
 }
