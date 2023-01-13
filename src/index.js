@@ -19,43 +19,19 @@ let currentPer_page = 40;
 function onSearch(e) {
   e.preventDefault();
     value = e.target.elements.searchQuery.value;
- // console.log(value);
-  
-   // getGallery(value).then(data => console.log(data.data.hits));
-    //console.log(getGallery);
-    
-    // try {
-    //     const card = await getGallery(value).then(res => {
-    //        // console.log(res.data.hits);
-    //       if (res.data.hits.length > 0 && checkSpaces(value)) {
-    //         renderCard(res.data.hits);
-    //       } else {
-    //         throw new Error('404')
-    //       }
-    //     }) 
-    // } catch (error) {
-    //    console.log("Sorry, there are no images matching your search query. Please try again.")
-    // }
-    
-   refs.loadMoreBtn.hidden = false;
- currentPage = 1;
+ // console.log(value); 
+
+  refs.loadMoreBtn.hidden = false;
+  currentPage = 1;
   e.target.reset();
- clearContainer();
+  clearContainer();
   getCard(value);
 
-  
-  
-  //refs.loadMoreBtn.disabled = false;    
-
-    // console.log(galleryApi);
-    // if (galleryApi.value === '')
-    //     return console.log("Sorry, there are no images matching your search query. Please try again.") 
 }
 async function getCard(value) {
-   try {
+  try {
+     // getGallery(value).then(data => console.log(data.data.hits));
         const res = await getGallery(value, currentPage)
-            //console.log(res.data.hits);
-          //console.log(res.data.totalHits);
           
           if (res.data.hits.length > 0 && checkSpaces(value)) {
             renderCard(res.data.hits);
@@ -75,12 +51,10 @@ function onMoreLoadPage() {
   
 
   getCard(value).then((res) => {
-    console.log(res);
+    //console.log(res);
     let total_pages = res.data.totalHits / currentPer_page;
-   
     Notify.success(`Hooray! We found ${res.data.totalHits} images.`);
-    // console.log(currentPage);
-    // console.log(total_pages);
+  
     if (currentPage >= total_pages) {
       refs.loadMoreBtn.hidden = true;
       Notify.failure("We're sorry, but you've reached the end of search results.");
