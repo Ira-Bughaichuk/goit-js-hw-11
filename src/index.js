@@ -1,6 +1,8 @@
 
 import {  getGallery} from "./js/galleryAPI";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
 const refs = {
     formEl: document.querySelector('#search-form'),
@@ -64,7 +66,7 @@ async function getCard(value) {
         
     } catch (error) {
      Notify.failure("Sorry, there are no images matching your search query. Please try again.")
-     
+     console.log(error);
   }
   return {}
 }
@@ -90,8 +92,10 @@ function onMoreLoadPage() {
 
 function renderCard(hits) {
     const markup = hits.map((({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
-        return `<div class="photo-card">
+      return `<div class="photo-card">
+       <a class="gallery__item" href="${largeImageURL}">
   <img src="${webformatURL}" data-src="${largeImageURL}" alt="${tags}" loading="lazy" />
+  </a>
   <div class="info">
     <p class="info-item">
       <b>Likes:</b> ${likes}
@@ -110,7 +114,10 @@ function renderCard(hits) {
             
     })).join('');
   
-    refs.listEl.insertAdjacentHTML('beforeend', markup);
+  refs.listEl.insertAdjacentHTML('beforeend', markup);
+  
+  let gallery = new SimpleLightbox('.gallery a');
+  gallery.refresh(); 
 }
 function clearContainer() {
     refs.listEl.innerHTML = ''; 
