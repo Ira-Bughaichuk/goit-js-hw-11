@@ -18,16 +18,29 @@ let currentPer_page = 40;
 
 function onSearch(e) {
   e.preventDefault();
-    value = e.target.elements.searchQuery.value;
+  value = e.target.elements.searchQuery.value;
+   
  // console.log(value); 
 
-  refs.loadMoreBtn.hidden = false;
+  refs.loadMoreBtn.style.visibility = "visible";
   currentPage = 1;
   e.target.reset();
   clearContainer();
   getCard(value);
 
 }
+  
+function onScrollDocument(e) {
+  const { height: cardHeight } = document
+  .querySelector(".gallery")
+  .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+  top: cardHeight * 2,
+  behavior: "smooth",
+  }); 
+}
+
 async function getCard(value) {
   try {
      // getGallery(value).then(data => console.log(data.data.hits));
@@ -35,6 +48,7 @@ async function getCard(value) {
           
           if (res.data.hits.length > 0 && checkSpaces(value)) {
             renderCard(res.data.hits);
+            Notify.success(`Hooray! We found ${res.data.totalHits} images.`);
             return res;
           } else {
             throw new Error('404');
@@ -48,18 +62,19 @@ async function getCard(value) {
 }
 function onMoreLoadPage() {
   currentPage += 1;
-  
+    
 
   getCard(value).then((res) => {
     //console.log(res);
     let total_pages = res.data.totalHits / currentPer_page;
-    Notify.success(`Hooray! We found ${res.data.totalHits} images.`);
+   
   
     if (currentPage >= total_pages) {
-      refs.loadMoreBtn.hidden = true;
+      refs.loadMoreBtn.style.visibility = "hidden";
       Notify.failure("We're sorry, but you've reached the end of search results.");
     }
   })
+  
  
  
 }
@@ -92,6 +107,7 @@ function renderCard(hits) {
   
   let gallery = new SimpleLightbox('.gallery a');
   gallery.refresh(); 
+  onScrollDocument();
 }
 function clearContainer() {
     refs.listEl.innerHTML = ''; 
