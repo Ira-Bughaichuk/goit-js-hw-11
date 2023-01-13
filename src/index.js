@@ -3,6 +3,7 @@ import {  getGallery} from "./js/galleryAPI";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
+import InfiniteScroll from 'infinite-scroll';
 
 const refs = {
     formEl: document.querySelector('#search-form'),
@@ -50,10 +51,19 @@ async function getCard(value) {
   }
   return {}
 }
+//document.addEventListener('scroll', infScroll)
+
+// let infScroll = new InfiniteScroll('.gallery', {
+//   path: function() {
+//     return 'https://api.unsplash.com/photos?client_id=...&page=' + this.pageIndex;
+//   },
+//   responseBody: 'json',
+//   history: false,
+// })
+
+
 function onMoreLoadPage() {
   currentPage += 1;
-    
-
   getCard(value).then((res) => {
     //console.log(res);
     let total_pages = res.data.totalHits / currentPer_page;
@@ -64,8 +74,14 @@ function onMoreLoadPage() {
       Notify.failure("We're sorry, but you've reached the end of search results.");
     }
   })
-  
 }
+
+window.addEventListener('scroll', () => {
+  if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
+    // alert('At the bottom!');
+    onMoreLoadPage();
+  }
+});
 
 function renderCard(hits) {
     const markup = hits.map((({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
@@ -114,3 +130,4 @@ function onScrollDocument(e) {
   behavior: "smooth",
   }); 
 }
+
